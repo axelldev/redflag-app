@@ -144,7 +144,6 @@ export async function POST(request: Request) {
 
     const responseText =
       msg.content[0].type === "text" ? msg.content[0].text : "";
-    console.log(responseText);
 
     let analysisResult;
     try {
