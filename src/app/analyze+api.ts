@@ -1,25 +1,25 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const ANALYSIS_PROMPT = `You are analyzing a screenshot to determine if it's a Twitter/X profile and identify potential red flags.
+const ANALYSIS_PROMPT = `You are analyzing a screenshot to determine if it's an X profile and identify potential red flags.
 
 **Phase 1: Validation**
-First, verify this is a valid Twitter/X profile screenshot. Check for:
+First, verify this is a valid X profile screenshot. Check for:
 - Profile photo (circular avatar)
 - Username with @ handle
 - Bio/description section
-- Twitter/X UI elements (follow button, profile layout, etc.)
+- X UI elements (follow button, profile layout, etc.)
 
-If this is NOT a Twitter/X profile screenshot, return:
+If this is NOT an X profile screenshot, return:
 {
   "isValid": false,
   "validationMessage": "Explain what the image shows instead",
   "redFlags": [],
   "overallScore": 0,
-  "summary": "Not a valid Twitter/X profile screenshot"
+  "summary": "Not a valid X profile screenshot"
 }
 
 **Phase 2: Red Flag Analysis** (only if valid)
-If it IS a Twitter/X profile, analyze the bio, display name, and visible content for these red flag categories:
+If it IS an X profile, analyze the bio, display name, and visible content for these red flag categories:
 
 1. **CEO/Founder Posturing**: Excessive title dropping, serial entrepreneur claims, "visionary" language
 2. **TechBro**: Hustle culture, grindset mentions, "rise and grind", overnight success claims
@@ -47,7 +47,7 @@ Calculate overallScore (0-100):
 Return ONLY valid JSON in this exact format:
 {
   "isValid": true,
-  "validationMessage": "Valid Twitter/X profile",
+  "validationMessage": "Valid X profile",
   "redFlags": [
     {
       "category": "CEO",

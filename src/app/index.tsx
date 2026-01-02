@@ -8,10 +8,12 @@ import AnalysisResults from "@/components/results/AnalysisResults";
 import { colors } from "@/constants/colors";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { useProfileAnalysis } from "@/hooks/useProfileAnalysis";
-import { Stack } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Index() {
+  const insets = useSafeAreaInsets();
+
   const {
     selectedImage,
     imageBase64,
@@ -30,20 +32,17 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: "Red Flag Analyzer",
-          headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.text,
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingTop: 16,
+          paddingBottom: insets.bottom + 24,
         }}
-      />
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Analyze Twitter/X Profiles</Text>
-          <Text style={styles.subtitle}>
-            Upload a screenshot to detect potential red flags
-          </Text>
-        </View>
+      >
+        <Text style={styles.subtitle}>
+          Upload an X profile screenshot to detect red flags
+        </Text>
 
         <ImageUploadArea selectedImage={selectedImage} />
 
@@ -83,16 +82,11 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  header: {
-    padding: 24,
+  glassHeader: {
+    paddingHorizontal: 24,
     alignItems: "center",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: colors.text,
-    marginBottom: 8,
-    textAlign: "center",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "rgba(255, 255, 255, 0.1)",
   },
   subtitle: {
     fontSize: 16,
