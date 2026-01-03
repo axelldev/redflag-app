@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HowItWorks should match snapshot for static content 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#1a1a1a",
+      "borderRadius": 12,
+      "margin": 16,
+      "marginTop": 32,
+      "padding": 20,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#ffffff",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 16,
+      }
+    }
+  >
+    How it works
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "marginBottom": 12,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#6366f1",
+          "fontSize": 16,
+          "fontWeight": "600",
+          "marginRight": 12,
+          "width": 24,
+        }
+      }
+    >
+      1.
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#a0a0a0",
+          "flex": 1,
+          "fontSize": 16,
+          "lineHeight": 22,
+        }
+      }
+    >
+      Upload, paste, or capture a screenshot
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "marginBottom": 12,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#6366f1",
+          "fontSize": 16,
+          "fontWeight": "600",
+          "marginRight": 12,
+          "width": 24,
+        }
+      }
+    >
+      2.
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#a0a0a0",
+          "flex": 1,
+          "fontSize": 16,
+          "lineHeight": 22,
+        }
+      }
+    >
+      AI analyzes for potential red flags
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "marginBottom": 12,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#6366f1",
+          "fontSize": 16,
+          "fontWeight": "600",
+          "marginRight": 12,
+          "width": 24,
+        }
+      }
+    >
+      3.
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#a0a0a0",
+          "flex": 1,
+          "fontSize": 16,
+          "lineHeight": 22,
+        }
+      }
+    >
+      Review detailed analysis and risk score
+    </Text>
+  </View>
+</View>
+`;
