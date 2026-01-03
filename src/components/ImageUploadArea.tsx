@@ -1,6 +1,11 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import { Image } from "expo-image";
 import { colors } from "@/constants/colors";
+import { Image } from "expo-image";
+import { Pressable, StyleSheet, Text } from "react-native";
+import Animated, {
+  FadeIn,
+  FadeOut,
+  LinearTransition,
+} from "react-native-reanimated";
 
 interface Props {
   selectedImage: string | null;
@@ -9,9 +14,14 @@ interface Props {
 
 export default function ImageUploadArea({ selectedImage, onClear }: Props) {
   return (
-    <View style={styles.uploadArea}>
+    <Animated.View layout={LinearTransition} style={styles.uploadArea}>
       {selectedImage ? (
-        <>
+        <Animated.View
+          key="image-preview"
+          entering={FadeIn.duration(300)}
+          exiting={FadeOut.duration(200)}
+          style={{ width: "100%" }}
+        >
           <Image source={{ uri: selectedImage }} style={styles.imagePreview} />
           {onClear && (
             <Pressable
@@ -24,17 +34,22 @@ export default function ImageUploadArea({ selectedImage, onClear }: Props) {
               <Text style={styles.clearButtonText}>×</Text>
             </Pressable>
           )}
-        </>
+        </Animated.View>
       ) : (
-        <View style={styles.placeholder}>
+        <Animated.View
+          key="placeholder"
+          entering={FadeIn.duration(300)}
+          exiting={FadeOut.duration(200)}
+          style={styles.placeholder}
+        >
           <Text style={styles.uploadIcon}>📤</Text>
           <Text style={styles.placeholderText}>Upload Screenshot</Text>
           <Text style={styles.placeholderSubtext}>
             Choose a file, use camera, or paste
           </Text>
-        </View>
+        </Animated.View>
       )}
-    </View>
+    </Animated.View>
   );
 }
 

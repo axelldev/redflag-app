@@ -102,12 +102,6 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  glassHeader: {
-    paddingHorizontal: 24,
-    alignItems: "center",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "rgba(255, 255, 255, 0.1)",
-  },
   subtitle: {
     fontSize: 16,
     color: colors.textSecondary,
