@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/colors";
 
 interface Props {
@@ -21,7 +22,10 @@ export default function ImageSourceButtons({
         onPress={onChooseFile}
         disabled={disabled}
       >
-        <Text style={styles.buttonText}>📁 Choose File</Text>
+        <View style={styles.buttonContent}>
+          <Ionicons name="folder-open" size={20} color={colors.text} />
+          <Text style={styles.buttonText}>Choose File</Text>
+        </View>
       </Pressable>
 
       <Pressable
@@ -29,7 +33,10 @@ export default function ImageSourceButtons({
         onPress={onUseCamera}
         disabled={disabled}
       >
-        <Text style={styles.buttonText}>📷 Use Camera</Text>
+        <View style={styles.buttonContent}>
+          <Ionicons name="camera" size={20} color={colors.text} />
+          <Text style={styles.buttonText}>Use Camera</Text>
+        </View>
       </Pressable>
 
       <Pressable
@@ -37,7 +44,10 @@ export default function ImageSourceButtons({
         onPress={onPasteClipboard}
         disabled={disabled}
       >
-        <Text style={styles.buttonText}>📋 Paste from Clipboard</Text>
+        <View style={styles.buttonContent}>
+          <Ionicons name="clipboard" size={20} color={colors.text} />
+          <Text style={styles.buttonText}>Paste from Clipboard</Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -57,6 +67,11 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: colors.primary,
+  },
+  buttonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   buttonText: {
     color: colors.text,

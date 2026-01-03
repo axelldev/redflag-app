@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/colors";
 
 interface Props {
@@ -8,7 +9,10 @@ interface Props {
 export default function ValidationWarning({ message }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>⚠️ {message}</Text>
+      <View style={styles.content}>
+        <Ionicons name="warning" size={20} color={colors.warning} />
+        <Text style={styles.text}>{message}</Text>
+      </View>
     </View>
   );
 }
@@ -21,8 +25,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: colors.warning,
   },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
   text: {
     color: colors.warning,
     fontSize: 16,
+    flex: 1,
   },
 });

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/constants/colors";
 import type { RedFlag } from "@/types/analysis";
 import RedFlagCard from "./RedFlagCard";
@@ -11,9 +12,16 @@ export default function RedFlagsList({ flags }: Props) {
   if (flags.length === 0) {
     return (
       <View style={styles.cleanProfileContainer}>
-        <Text style={styles.cleanProfileText}>
-          ✅ No significant red flags detected! This profile appears genuine.
-        </Text>
+        <View style={styles.cleanProfileContent}>
+          <Ionicons
+            name="checkmark-circle"
+            size={20}
+            color={colors.success}
+          />
+          <Text style={styles.cleanProfileText}>
+            No significant red flags detected! This profile appears genuine.
+          </Text>
+        </View>
       </View>
     );
   }
@@ -45,8 +53,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: colors.success,
   },
+  cleanProfileContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
   cleanProfileText: {
     fontSize: 16,
     color: colors.success,
+    flex: 1,
   },
 });

@@ -1,6 +1,7 @@
 import { colors } from "@/constants/colors";
 import { Image } from "expo-image";
 import { Pressable, StyleSheet, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -31,7 +32,7 @@ export default function ImageUploadArea({ selectedImage, onClear }: Props) {
               ]}
               onPress={onClear}
             >
-              <Text style={styles.clearButtonText}>×</Text>
+              <Ionicons name="close" size={24} color={colors.text} />
             </Pressable>
           )}
         </Animated.View>
@@ -42,7 +43,12 @@ export default function ImageUploadArea({ selectedImage, onClear }: Props) {
           exiting={FadeOut.duration(200)}
           style={styles.placeholder}
         >
-          <Text style={styles.uploadIcon}>📤</Text>
+          <Ionicons
+            name="cloud-upload-outline"
+            size={64}
+            color={colors.textSecondary}
+            style={styles.uploadIcon}
+          />
           <Text style={styles.placeholderText}>Upload Screenshot</Text>
           <Text style={styles.placeholderSubtext}>
             Choose a file, use camera, or paste
@@ -84,12 +90,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.85)",
     transform: [{ scale: 0.95 }],
   },
-  clearButtonText: {
-    color: colors.text,
-    fontSize: 28,
-    fontWeight: "300",
-    lineHeight: 28,
-  },
   placeholder: {
     height: 250,
     justifyContent: "center",
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   uploadIcon: {
-    fontSize: 64,
     marginBottom: 16,
   },
   placeholderText: {
