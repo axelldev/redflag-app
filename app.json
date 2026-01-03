@@ -27,8 +27,11 @@
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "CAMERA",
+        "READ_MEDIA_IMAGES",
+        "CAMERA",
         "READ_MEDIA_IMAGES"
-      ]
+      ],
+      "package": "com.axelldev.redflag"
     },
     "web": {
       "output": "server",

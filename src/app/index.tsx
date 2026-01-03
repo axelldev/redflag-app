@@ -9,6 +9,7 @@ import { colors } from "@/constants/colors";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { useProfileAnalysis } from "@/hooks/useProfileAnalysis";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -20,14 +21,21 @@ export default function Index() {
     handleChooseFile,
     handleUseCamera,
     handlePasteClipboard,
+    clearImage,
   } = useImageUpload();
 
-  const { analysis, isLoading, error, analyzeProfile } = useProfileAnalysis();
+  const { analysis, isLoading, error, analyzeProfile, clearAnalysis } =
+    useProfileAnalysis();
 
   const handleAnalyze = () => {
     if (imageBase64) {
       analyzeProfile(imageBase64);
     }
+  };
+
+  const handleClear = () => {
+    clearImage();
+    clearAnalysis();
   };
 
   return (
@@ -44,20 +52,32 @@ export default function Index() {
           Upload an X profile screenshot to detect red flags
         </Text>
 
-        <ImageUploadArea selectedImage={selectedImage} />
+        <ImageUploadArea selectedImage={selectedImage} onClear={handleClear} />
 
-        <ImageSourceButtons
-          onChooseFile={handleChooseFile}
-          onUseCamera={handleUseCamera}
-          onPasteClipboard={handlePasteClipboard}
-        />
+        {!selectedImage && (
+          <Animated.View
+            entering={FadeInUp.duration(400)}
+            exiting={FadeOutDown.duration(400)}
+          >
+            <ImageSourceButtons
+              onChooseFile={handleChooseFile}
+              onUseCamera={handleUseCamera}
+              onPasteClipboard={handlePasteClipboard}
+            />
+          </Animated.View>
+        )}
 
         {selectedImage && (
-          <AnalyzeButton
-            onPress={handleAnalyze}
-            isLoading={isLoading}
-            disabled={!imageBase64 || isLoading}
-          />
+          <Animated.View
+            entering={FadeInUp.duration(400)}
+            exiting={FadeOutDown.duration(400)}
+          >
+            <AnalyzeButton
+              onPress={handleAnalyze}
+              isLoading={isLoading}
+              disabled={!imageBase64 || isLoading}
+            />
+          </Animated.View>
         )}
 
         {isLoading && (
