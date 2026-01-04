@@ -2,19 +2,19 @@ import { AnalysisResponse, RedFlag } from '@/types/analysis';
 
 export const mockRedFlags: RedFlag[] = [
   {
-    category: 'CEO',
+    category: 'Professional Posturing',
     severity: 'medium',
     evidence: 'Profile mentions being "Founder & CEO" of 5 different startups',
     analysis: 'Excessive title dropping and serial entrepreneurship claims may indicate CEO posturing',
   },
   {
-    category: 'AI Bro',
+    category: 'AI Hype',
     severity: 'high',
     evidence: 'Bio includes "Building the future with AI" and multiple AI-related hashtags',
     analysis: 'Heavy AI hype language without substantial technical content',
   },
   {
-    category: 'Crypto',
+    category: 'Crypto/Web3',
     severity: 'low',
     evidence: 'Occasional mentions of Web3 in retweets',
     analysis: 'Minimal crypto engagement, not a primary focus',
@@ -23,7 +23,9 @@ export const mockRedFlags: RedFlag[] = [
 
 export const validAnalysisResponse: AnalysisResponse = {
   isValid: true,
-  validationMessage: 'Valid X/Twitter profile detected',
+  platform: 'X',
+  contentType: 'profile',
+  validationMessage: 'Valid X profile detected',
   redFlags: mockRedFlags,
   overallScore: 45,
   summary:
@@ -32,7 +34,9 @@ export const validAnalysisResponse: AnalysisResponse = {
 
 export const invalidAnalysisResponse: AnalysisResponse = {
   isValid: false,
-  validationMessage: 'This does not appear to be a valid X/Twitter profile screenshot',
+  platform: 'Unknown',
+  contentType: 'profile',
+  validationMessage: 'This does not appear to be a valid social media screenshot',
   redFlags: [],
   overallScore: 0,
   summary: '',
@@ -40,7 +44,9 @@ export const invalidAnalysisResponse: AnalysisResponse = {
 
 export const cleanProfileResponse: AnalysisResponse = {
   isValid: true,
-  validationMessage: 'Valid X/Twitter profile detected',
+  platform: 'X',
+  contentType: 'profile',
+  validationMessage: 'Valid X profile detected',
   redFlags: [],
   overallScore: 10,
   summary: 'Clean profile with no significant red flags detected. Normal, authentic usage patterns.',
@@ -48,22 +54,24 @@ export const cleanProfileResponse: AnalysisResponse = {
 
 export const highRiskProfileResponse: AnalysisResponse = {
   isValid: true,
-  validationMessage: 'Valid X/Twitter profile detected',
+  platform: 'X',
+  contentType: 'profile',
+  validationMessage: 'Valid X profile detected',
   redFlags: [
     {
-      category: 'Scammer',
+      category: 'Scammer Indicators',
       severity: 'high',
       evidence: 'Multiple promises of guaranteed returns and "DM for info" messages',
       analysis: 'Classic scam patterns with financial promises and requests for direct contact',
     },
     {
-      category: 'Crypto',
+      category: 'Crypto/Web3',
       severity: 'high',
       evidence: 'Constant promotion of pump-and-dump coins and NFT projects',
       analysis: 'Aggressive cryptocurrency promotion with get-rich-quick messaging',
     },
     {
-      category: 'NFT',
+      category: 'Crypto/Web3',
       severity: 'high',
       evidence: 'Profile picture is an NFT, bio mentions multiple NFT projects',
       analysis: 'Heavy NFT involvement and promotion',
@@ -76,16 +84,18 @@ export const highRiskProfileResponse: AnalysisResponse = {
 
 export const mediumRiskProfileResponse: AnalysisResponse = {
   isValid: true,
-  validationMessage: 'Valid X/Twitter profile detected',
+  platform: 'X',
+  contentType: 'profile',
+  validationMessage: 'Valid X profile detected',
   redFlags: [
     {
-      category: 'TechBro',
+      category: 'Hustle Culture',
       severity: 'medium',
       evidence: 'Frequent use of terms like "disruption", "10x", and "hustle culture"',
       analysis: 'Moderate tech bro culture indicators',
     },
     {
-      category: 'Indie Hacker',
+      category: 'Indie Hacker Culture',
       severity: 'low',
       evidence: 'Bio mentions building in public and indie hacking',
       analysis: 'Light indie hacker culture, not concerning',
@@ -93,4 +103,83 @@ export const mediumRiskProfileResponse: AnalysisResponse = {
   ],
   overallScore: 35,
   summary: 'Some tech culture indicators present but not extreme. Medium-low risk level.',
+};
+
+// Multi-platform fixtures
+export const instagramProfileResponse: AnalysisResponse = {
+  isValid: true,
+  platform: 'Instagram',
+  contentType: 'profile',
+  validationMessage: 'Valid Instagram profile detected',
+  redFlags: [
+    {
+      category: 'Scammer Indicators',
+      severity: 'high',
+      evidence: 'Bio promises "Get rich quick with my course! Link in bio"',
+      analysis: 'Classic get-rich-quick scheme targeting followers',
+    },
+  ],
+  overallScore: 70,
+  summary: 'High-risk influencer profile with scam indicators.',
+};
+
+export const linkedInProfileResponse: AnalysisResponse = {
+  isValid: true,
+  platform: 'LinkedIn',
+  contentType: 'profile',
+  validationMessage: 'Valid LinkedIn profile detected',
+  redFlags: [
+    {
+      category: 'Professional Posturing',
+      severity: 'low',
+      evidence: 'Headline includes "CEO | Founder | Thought Leader | Innovator"',
+      analysis: 'Moderate title stacking, but common on LinkedIn',
+    },
+  ],
+  overallScore: 20,
+  summary: 'Mild professional posturing but within normal LinkedIn behavior.',
+};
+
+export const linkedInPostResponse: AnalysisResponse = {
+  isValid: true,
+  platform: 'LinkedIn',
+  contentType: 'post',
+  validationMessage: 'Valid LinkedIn post detected',
+  redFlags: [
+    {
+      category: 'Engagement Bait',
+      severity: 'low',
+      evidence: 'Post asks "Agree? Comment below!" with generic career advice',
+      analysis: 'Mild engagement farming but common on LinkedIn',
+    },
+  ],
+  overallScore: 25,
+  summary: 'Minor engagement tactics but within normal LinkedIn behavior.',
+};
+
+export const facebookProfileResponse: AnalysisResponse = {
+  isValid: true,
+  platform: 'Facebook',
+  contentType: 'profile',
+  validationMessage: 'Valid Facebook profile detected',
+  redFlags: [
+    {
+      category: 'MLM/Pyramid Schemes',
+      severity: 'high',
+      evidence: 'Bio mentions "Be your own boss! Join my team!" with MLM product links',
+      analysis: 'Clear multi-level marketing recruitment tactics',
+    },
+  ],
+  overallScore: 75,
+  summary: 'High-risk profile with MLM recruitment indicators.',
+};
+
+export const tiktokProfileResponse: AnalysisResponse = {
+  isValid: true,
+  platform: 'TikTok',
+  contentType: 'profile',
+  validationMessage: 'Valid TikTok profile detected',
+  redFlags: [],
+  overallScore: 15,
+  summary: 'Clean TikTok profile with normal content creator behavior.',
 };

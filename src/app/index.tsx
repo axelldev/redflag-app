@@ -49,7 +49,7 @@ export default function Index() {
         }}
       >
         <Text style={styles.subtitle}>
-          Upload an X profile screenshot to detect red flags
+          Upload a social media screenshot to detect red flags
         </Text>
 
         <ImageUploadArea selectedImage={selectedImage} onClear={handleClear} />
@@ -81,7 +81,7 @@ export default function Index() {
         )}
 
         {isLoading && (
-          <LoadingIndicator message="Analyzing profile for red flags..." />
+          <LoadingIndicator message="Analyzing content for red flags..." />
         )}
 
         {error && <ErrorAlert message={error} />}

@@ -1,66 +1,87 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const ANALYSIS_PROMPT = `You are analyzing a screenshot to determine if it's an X profile and identify potential red flags.
+const ANALYSIS_PROMPT = `You are analyzing a social media screenshot to detect potential red flags.
 
-**Phase 1: Validation**
-First, verify this is a valid X profile screenshot. Check for:
-- Profile photo (circular avatar)
-- Username with @ handle
-- Bio/description section
-- X UI elements (follow button, profile layout, etc.)
+**Phase 1: Platform & Content Detection**
+First, identify:
+1. **Platform**: Which social media platform is this? (X, Instagram, LinkedIn, Facebook, TikTok, or Other)
+   - Look for distinctive UI elements, branding, layout patterns
+   - Examples: Instagram's circular story icons, LinkedIn's blue header, X's interface, Facebook's layout
 
-If this is NOT an X profile screenshot, return:
-{
-  "isValid": false,
-  "validationMessage": "Explain what the image shows instead",
-  "redFlags": [],
-  "overallScore": 0,
-  "summary": "Not a valid X profile screenshot"
-}
+2. **Content Type**: Is this a profile or a post?
+   - Profile: Shows bio, username/handle, follower counts, profile picture
+   - Post: Shows individual content (image/video/text) with likes, comments, shares
+
+3. **Validation**: Is this a valid social media screenshot?
+   - If NOT a social media screenshot, return:
+     {
+       "isValid": false,
+       "platform": "Unknown",
+       "contentType": "profile",
+       "validationMessage": "Explain what the image shows instead",
+       "redFlags": [],
+       "overallScore": 0,
+       "summary": "Not a valid social media screenshot"
+     }
 
 **Phase 2: Red Flag Analysis** (only if valid)
-If it IS an X profile, analyze the bio, display name, and visible content for these red flag categories:
+If it IS valid social media content, analyze the visible information for red flags.
 
-1. **CEO/Founder Posturing**: Excessive title dropping, serial entrepreneur claims, "visionary" language
-2. **TechBro**: Hustle culture, grindset mentions, "rise and grind", overnight success claims
-3. **AI Bro**: Excessive AI hype, "AI will change everything", AI enthusiast without substance
-4. **AI Artist**: AI-generated art advocacy, anti-traditional art stance, prompt engineering flex
-5. **NFT**: NFT promotions, floor price mentions, JPEG references, ape/punk references
-6. **Crypto**: Crypto shilling, "WAGMI", "to the moon", coin promotions, unrealistic gains
-7. **Scammer**: Unrealistic promises, urgency tactics, guaranteed returns, too good to be true offers
-8. **Indie Hacker**: Excessive "building in public", revenue screenshot bragging, SaaS obsession
-9. **Tech Tuber**: Clickbait language, thumbnail-style profile pic, dramatic claims, "you won't believe"
+**Dynamic Category Guidelines:**
+You are NOT limited to predefined categories. Generate categories that accurately describe the red flags you observe. Common categories might include:
+
+- **Professional Posturing**: CEO/Founder title dropping, serial entrepreneur claims, "visionary" language
+- **Hustle Culture**: Grindset mentions, "rise and grind", overnight success claims, toxic productivity
+- **AI Hype**: Excessive AI enthusiasm without substance, "AI will change everything" claims
+- **Crypto/Web3**: Crypto shilling, NFT promotion, "WAGMI", "to the moon", unrealistic gains
+- **Scammer Indicators**: Unrealistic promises, urgency tactics, guaranteed returns, too-good-to-be-true
+- **Authenticity Issues**: Fake engagement patterns, purchased followers, bot-like behavior
+- **Engagement Bait**: Deliberately provocative statements designed for engagement farming
+- **MLM/Pyramid Schemes**: Multi-level marketing language, recruitment focus
+- **Misinformation**: Conspiracy theories, false claims, misleading information
+- **Toxic Behavior**: Harassment, hate speech, discriminatory content
+
+**Create your own categories** if the red flags don't fit the above. Use clear, descriptive category names (2-4 words).
 
 For each red flag found, provide:
-- category: exact match from above
-- severity: "low" (minor indicators), "medium" (clear patterns), or "high" (extreme/multiple indicators)
-- evidence: specific text or visual elements from the profile
-- analysis: brief explanation of why it's a red flag
+- **category**: A clear, descriptive category name (can be custom)
+- **severity**: "low" (minor indicators), "medium" (clear patterns), or "high" (extreme/multiple indicators)
+- **evidence**: Specific text or visual elements from the content
+- **analysis**: Brief explanation of why it's a red flag
 
-Calculate overallScore (0-100):
-- 0-20: Clean profile, minimal concerns
+**Scoring (0-100):**
+- 0-20: Clean, minimal concerns
 - 21-40: Some minor red flags
 - 41-60: Moderate concerns
 - 61-80: Significant red flags
 - 81-100: Major concerns, multiple severe red flags
 
+**Platform-Specific Considerations:**
+- **LinkedIn**: Professional posturing may be more common and less concerning than on other platforms
+- **Instagram**: Visual content, influencer culture, aesthetic focus
+- **X**: Hot takes, engagement farming, quote-tweet culture
+- **Facebook**: More personal, potential MLM activity
+- **TikTok**: Short-form video content, trend participation
+
 Return ONLY valid JSON in this exact format:
 {
   "isValid": true,
-  "validationMessage": "Valid X profile",
+  "platform": "Instagram",
+  "contentType": "profile",
+  "validationMessage": "Valid Instagram profile detected",
   "redFlags": [
     {
-      "category": "CEO",
-      "severity": "medium",
-      "evidence": "Bio says 'Serial Entrepreneur | Founder of 5 companies'",
-      "analysis": "Excessive title dropping and founder claims without context"
+      "category": "Crypto Promotion",
+      "severity": "high",
+      "evidence": "Bio says 'DM for crypto tips 💎' and links to pump-and-dump groups",
+      "analysis": "Aggressive cryptocurrency promotion with financial advice and direct messaging requests indicates potential scam activity"
     }
   ],
-  "overallScore": 45,
+  "overallScore": 65,
   "summary": "Brief 1-2 sentence summary of the analysis"
 }
 
-Be honest and direct. Not all profiles will have red flags. If the profile seems genuine, say so with an overallScore of 0-20 and empty redFlags array.`;
+Be honest and direct. Not all content will have red flags. If it seems genuine, say so with an overallScore of 0-20 and empty redFlags array.`;
 
 export async function POST(request: Request) {
   const anthropic = new Anthropic({
@@ -109,6 +130,14 @@ export async function POST(request: Request) {
             isValid: {
               type: "boolean",
             },
+            platform: {
+              type: "string",
+              enum: ["X", "Instagram", "LinkedIn", "Facebook", "TikTok", "Other", "Unknown"],
+            },
+            contentType: {
+              type: "string",
+              enum: ["profile", "post"],
+            },
             validationMessage: {
               type: "string",
             },
@@ -123,6 +152,7 @@ export async function POST(request: Request) {
                   },
                   severity: {
                     type: "string",
+                    enum: ["low", "medium", "high"],
                   },
                   evidence: {
                     type: "string",
@@ -131,13 +161,17 @@ export async function POST(request: Request) {
                     type: "string",
                   },
                 },
+                required: ["category", "severity", "evidence", "analysis"],
               },
             },
             overallScore: {
               type: "number",
+              minimum: 0,
+              maximum: 100,
             },
             summary: { type: "string" },
           },
+          required: ["isValid", "platform", "contentType", "validationMessage", "redFlags", "overallScore", "summary"],
         },
       },
     } as const);

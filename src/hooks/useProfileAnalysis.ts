@@ -27,7 +27,7 @@ export const useProfileAnalysis = () => {
       const data: AnalysisResponse = await response.json();
       setAnalysis(data);
     } catch {
-      setError("Failed to analyze profile. Please try again.");
+      setError("Failed to analyze content. Please try again.");
     } finally {
       setIsLoading(false);
     }

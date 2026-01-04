@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a React Native/Expo mobile app that analyzes Twitter/X profile screenshots to detect potential "red flags" using Claude's vision API. The app uses AI to analyze profile content and categorize red flags across multiple dimensions (CEO posturing, tech bro culture, AI hype, crypto/NFT promotion, etc.).
+This is a React Native/Expo mobile app that analyzes social media screenshots (X, Instagram, LinkedIn, Facebook, TikTok, etc.) to detect potential "red flags" using Claude's vision API. The app uses AI to:
+- Auto-detect the social media platform from screenshot UI elements
+- Identify whether content is a profile or a post
+- Analyze content for red flags using dynamic, context-aware categories
+- Provide risk scoring and detailed evidence with platform-specific considerations
 
 ## Development Commands
 
@@ -78,8 +82,11 @@ The main screen (`src/app/index.tsx`) is composed of:
 The analysis flow uses Claude's structured outputs feature:
 - Base64-encoded images are sent with a detailed analysis prompt
 - JSON schema is enforced via `output_format` with `json_schema` type
-- Response validation happens in two phases: (1) Check if image is a valid Twitter/X profile, (2) Analyze for red flags if valid
-- Red flags are categorized by type, severity, evidence, and analysis
+- Response validation happens in two phases:
+  1. **Platform & Content Detection**: Identifies the social media platform (X, Instagram, LinkedIn, Facebook, TikTok, Other, Unknown) and content type (profile or post). Validates that the screenshot is valid social media content.
+  2. **Red Flag Analysis**: Analyzes for red flags using dynamic categories (not restricted to a predefined list). Claude generates contextually appropriate categories based on the content and platform.
+- Red flags include: category (dynamic string), severity (low/medium/high), evidence (specific text/visual elements), and analysis (explanation)
+- Platform-specific considerations adjust interpretation (e.g., LinkedIn CEO posturing is less concerning than on other platforms)
 
 ### Environment Configuration
 
