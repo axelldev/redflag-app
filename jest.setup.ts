@@ -82,6 +82,14 @@ jest.mock('expo-image', () => {
   };
 });
 
+// Mock expo-blur
+jest.mock('expo-blur', () => {
+  const { View } = require('react-native');
+  return {
+    BlurView: View,
+  };
+});
+
 // Silence console warnings and errors in tests
 global.console = {
   ...console,

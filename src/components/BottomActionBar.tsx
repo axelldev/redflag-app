@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { BlurView } from "expo-blur";
 import { colors } from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -27,7 +28,11 @@ export default function BottomActionBar({
   }
 
   return (
-    <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
+    <BlurView
+      intensity={80}
+      tint="dark"
+      style={[styles.container, { paddingBottom: insets.bottom + 16 }]}
+    >
       <View style={styles.buttonRow}>
         {/* New Analysis Button */}
         <Pressable
@@ -60,7 +65,7 @@ export default function BottomActionBar({
           <Text style={styles.tertiaryButtonText}>Clear</Text>
         </Pressable>
       </View>
-    </View>
+    </BlurView>
   );
 }
 
@@ -70,11 +75,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.background,
     borderTopWidth: 1,
-    borderTopColor: colors.border,
+    borderTopColor: "rgba(51, 51, 51, 0.3)",
     paddingTop: 16,
     paddingHorizontal: 16,
+    overflow: "hidden",
   },
   buttonRow: {
     flexDirection: "row",
