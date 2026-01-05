@@ -1,4 +1,5 @@
 import AnalyzeButton from "@/components/AnalyzeButton";
+import BottomActionBar from "@/components/BottomActionBar";
 import ErrorAlert from "@/components/ErrorAlert";
 import HowItWorks from "@/components/HowItWorks";
 import ImageSourceButtons from "@/components/ImageSourceButtons";
@@ -33,6 +34,18 @@ export default function Index() {
     }
   };
 
+  const handleReanalyze = () => {
+    if (imageBase64) {
+      clearAnalysis();
+      analyzeProfile(imageBase64);
+    }
+  };
+
+  const handleNewAnalysis = () => {
+    clearImage();
+    clearAnalysis();
+  };
+
   const handleClear = () => {
     clearImage();
     clearAnalysis();
@@ -45,7 +58,7 @@ export default function Index() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: 16,
-          paddingBottom: insets.bottom + 24,
+          paddingBottom: insets.bottom + 100,
         }}
       >
         <Text style={styles.subtitle}>
@@ -67,7 +80,7 @@ export default function Index() {
           </Animated.View>
         )}
 
-        {selectedImage && (
+        {selectedImage && !analysis && (
           <Animated.View
             entering={FadeInUp.duration(400)}
             exiting={FadeOutDown.duration(400)}
@@ -90,6 +103,15 @@ export default function Index() {
 
         <HowItWorks />
       </ScrollView>
+
+      <BottomActionBar
+        hasImage={!!selectedImage}
+        hasAnalysis={!!analysis}
+        isLoading={isLoading}
+        onNewAnalysis={handleNewAnalysis}
+        onReanalyze={handleReanalyze}
+        onClear={handleClear}
+      />
     </View>
   );
 }

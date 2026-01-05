@@ -5,9 +5,10 @@ interface Props {
   onPress: () => void;
   isLoading: boolean;
   disabled: boolean;
+  text?: string;
 }
 
-export default function AnalyzeButton({ onPress, isLoading, disabled }: Props) {
+export default function AnalyzeButton({ onPress, isLoading, disabled, text = "Analyze" }: Props) {
   return (
     <Pressable
       style={styles.button}
@@ -15,7 +16,7 @@ export default function AnalyzeButton({ onPress, isLoading, disabled }: Props) {
       disabled={disabled}
     >
       <Text style={styles.buttonText}>
-        {isLoading ? "Analyzing..." : "Analyze"}
+        {isLoading ? "Analyzing..." : text}
       </Text>
     </Pressable>
   );
