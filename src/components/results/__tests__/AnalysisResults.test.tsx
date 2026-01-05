@@ -23,7 +23,7 @@ describe('AnalysisResults', () => {
     render(<AnalysisResults analysis={invalidAnalysisResponse} />);
 
     expect(
-      screen.getByText('This does not appear to be a valid X/Twitter profile screenshot')
+      screen.getByText('This does not appear to be a valid social media screenshot')
     ).toBeTruthy();
   });
 
@@ -51,7 +51,7 @@ describe('AnalysisResults', () => {
     render(<AnalysisResults analysis={validAnalysisResponse} />);
 
     expect(screen.getByText('Red Flags Detected:')).toBeTruthy();
-    expect(screen.getByText('CEO')).toBeTruthy();
+    expect(screen.getByText('Professional Posturing')).toBeTruthy();
   });
 
   it('should render clean profile message when valid with no flags', () => {
@@ -82,16 +82,15 @@ describe('AnalysisResults', () => {
     render(<AnalysisResults analysis={highRiskProfileResponse} />);
 
     expect(screen.getByText('85/100')).toBeTruthy();
-    expect(screen.getByText('Scammer')).toBeTruthy();
-    expect(screen.getByText('Crypto')).toBeTruthy();
-    expect(screen.getByText('NFT')).toBeTruthy();
+    expect(screen.getByText('Scammer Indicators')).toBeTruthy();
+    expect(screen.getAllByText('Crypto/Web3').length).toBeGreaterThan(0);
   });
 
   it('should not show ValidationWarning when profile is valid', () => {
     render(<AnalysisResults analysis={validAnalysisResponse} />);
 
     expect(
-      screen.queryByText('This does not appear to be a valid X/Twitter profile screenshot')
+      screen.queryByText('This does not appear to be a valid social media screenshot')
     ).toBeNull();
   });
 

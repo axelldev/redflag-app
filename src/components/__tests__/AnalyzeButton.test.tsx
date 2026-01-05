@@ -7,15 +7,15 @@ describe('AnalyzeButton', () => {
 
     render(<AnalyzeButton onPress={mockOnPress} isLoading={false} disabled={false} />);
 
-    fireEvent.press(screen.getByText('Analyze Profile'));
+    fireEvent.press(screen.getByText('Analyze'));
 
     expect(mockOnPress).toHaveBeenCalledTimes(1);
   });
 
-  it('should display "Analyze Profile" when not loading', () => {
+  it('should display "Analyze" when not loading', () => {
     render(<AnalyzeButton onPress={jest.fn()} isLoading={false} disabled={false} />);
 
-    expect(screen.getByText('Analyze Profile')).toBeTruthy();
+    expect(screen.getByText('Analyze')).toBeTruthy();
     expect(screen.queryByText('Analyzing...')).toBeNull();
   });
 
@@ -23,21 +23,21 @@ describe('AnalyzeButton', () => {
     render(<AnalyzeButton onPress={jest.fn()} isLoading={true} disabled={false} />);
 
     expect(screen.getByText('Analyzing...')).toBeTruthy();
-    expect(screen.queryByText('Analyze Profile')).toBeNull();
+    expect(screen.queryByText('Analyze')).toBeNull();
   });
 
   it('should render when disabled', () => {
     render(<AnalyzeButton onPress={jest.fn()} isLoading={false} disabled={true} />);
 
     // Verify button text is rendered even when disabled
-    expect(screen.getByText('Analyze Profile')).toBeTruthy();
+    expect(screen.getByText('Analyze')).toBeTruthy();
   });
 
   it('should render when enabled', () => {
     render(<AnalyzeButton onPress={jest.fn()} isLoading={false} disabled={false} />);
 
     // Verify button text is rendered
-    expect(screen.getByText('Analyze Profile')).toBeTruthy();
+    expect(screen.getByText('Analyze')).toBeTruthy();
   });
 
   it('should toggle between loading and not loading states', () => {
@@ -45,7 +45,7 @@ describe('AnalyzeButton', () => {
       <AnalyzeButton onPress={jest.fn()} isLoading={false} disabled={false} />
     );
 
-    expect(screen.getByText('Analyze Profile')).toBeTruthy();
+    expect(screen.getByText('Analyze')).toBeTruthy();
 
     rerender(<AnalyzeButton onPress={jest.fn()} isLoading={true} disabled={false} />);
 
@@ -53,7 +53,7 @@ describe('AnalyzeButton', () => {
 
     rerender(<AnalyzeButton onPress={jest.fn()} isLoading={false} disabled={false} />);
 
-    expect(screen.getByText('Analyze Profile')).toBeTruthy();
+    expect(screen.getByText('Analyze')).toBeTruthy();
   });
 
   it('should show loading text even when disabled', () => {
@@ -67,8 +67,8 @@ describe('AnalyzeButton', () => {
 
     render(<AnalyzeButton onPress={mockOnPress} isLoading={false} disabled={false} />);
 
-    fireEvent.press(screen.getByText('Analyze Profile'));
-    fireEvent.press(screen.getByText('Analyze Profile'));
+    fireEvent.press(screen.getByText('Analyze'));
+    fireEvent.press(screen.getByText('Analyze'));
 
     expect(mockOnPress).toHaveBeenCalledTimes(2);
   });

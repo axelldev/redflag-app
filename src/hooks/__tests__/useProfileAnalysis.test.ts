@@ -55,7 +55,7 @@ describe('useProfileAnalysis', () => {
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-    expect(result.current.error).toBe('Failed to analyze profile. Please try again.');
+    expect(result.current.error).toBe('Failed to analyze content. Please try again.');
     expect(result.current.analysis).toBeNull();
   });
 
@@ -73,7 +73,7 @@ describe('useProfileAnalysis', () => {
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-    expect(result.current.error).toBe('Failed to analyze profile. Please try again.');
+    expect(result.current.error).toBe('Failed to analyze content. Please try again.');
     expect(result.current.analysis).toBeNull();
   });
 

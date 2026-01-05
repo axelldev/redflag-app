@@ -15,7 +15,7 @@ export default function AnalyzeButton({ onPress, isLoading, disabled }: Props) {
       disabled={disabled}
     >
       <Text style={styles.buttonText}>
-        {isLoading ? "Analyzing..." : "Analyze Profile"}
+        {isLoading ? "Analyzing..." : "Analyze"}
       </Text>
     </Pressable>
   );

@@ -27,9 +27,9 @@ describe('RedFlagsList', () => {
     render(<RedFlagsList flags={mockRedFlags} />);
 
     // Check that all categories are rendered
-    expect(screen.getByText('CEO')).toBeTruthy();
-    expect(screen.getByText('AI Bro')).toBeTruthy();
-    expect(screen.getByText('Crypto')).toBeTruthy();
+    expect(screen.getByText('Professional Posturing')).toBeTruthy();
+    expect(screen.getByText('AI Hype')).toBeTruthy();
+    expect(screen.getByText('Crypto/Web3')).toBeTruthy();
   });
 
   it('should render correct number of flag cards', () => {

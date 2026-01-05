@@ -94,7 +94,7 @@ describe('POST /analyze', () => {
     expect(response.status).toBe(200);
     expect(data.isValid).toBe(false);
     expect(data.validationMessage).toBe(
-      'This does not appear to be a valid X/Twitter profile screenshot'
+      'This does not appear to be a valid social media screenshot'
     );
   });
 
@@ -197,7 +197,7 @@ describe('POST /analyze', () => {
               },
               {
                 type: 'text',
-                text: expect.stringContaining('Phase 1: Validation'),
+                text: expect.stringContaining('Phase 1: Platform & Content Detection'),
               },
             ],
           },

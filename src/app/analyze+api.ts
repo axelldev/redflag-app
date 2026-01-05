@@ -132,7 +132,15 @@ export async function POST(request: Request) {
             },
             platform: {
               type: "string",
-              enum: ["X", "Instagram", "LinkedIn", "Facebook", "TikTok", "Other", "Unknown"],
+              enum: [
+                "X",
+                "Instagram",
+                "LinkedIn",
+                "Facebook",
+                "TikTok",
+                "Other",
+                "Unknown",
+              ],
             },
             contentType: {
               type: "string",
@@ -166,12 +174,18 @@ export async function POST(request: Request) {
             },
             overallScore: {
               type: "number",
-              minimum: 0,
-              maximum: 100,
             },
             summary: { type: "string" },
           },
-          required: ["isValid", "platform", "contentType", "validationMessage", "redFlags", "overallScore", "summary"],
+          required: [
+            "isValid",
+            "platform",
+            "contentType",
+            "validationMessage",
+            "redFlags",
+            "overallScore",
+            "summary",
+          ],
         },
       },
     } as const);
